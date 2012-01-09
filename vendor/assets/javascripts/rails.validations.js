@@ -102,7 +102,10 @@
   var validateElement = function(element, validators) {
     element.trigger('element:validate:before');
 
-    if (element.data('changed') !== false) {
+    if (element.is(':disabled')) {
+      element.data('valid', null);
+      element.trigger('element:validate:pass');
+    } else if (element.data('changed') !== false) {
       var valid = true;
       element.data('changed', false);
 
