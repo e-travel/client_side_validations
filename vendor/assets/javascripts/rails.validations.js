@@ -73,7 +73,12 @@
     if ($(this[0]).is('form')) {
       return validateForm($(this[0]), validators);
     } else {
-      return validateElement($(this[0]), validators[this[0].name]);
+      // Ignore radio buttons
+      if(this[0]['type'] == 'radio') {  // <== This ignores radios
+        return true;
+      } else {
+        return validateElement($(this[0]), validators[this[0].name]);
+      }
     }
   }
 
