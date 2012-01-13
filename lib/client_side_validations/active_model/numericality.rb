@@ -17,7 +17,7 @@ module ClientSideValidations::ActiveModel
       end
 
       OPTION_MAP.each do |option, message_type|
-        if count = options[option]
+        if (count = options[option]) && !count.is_a?(Proc) && !count.is_a?(Symbol)
           hash[:messages][option] = model.errors.generate_message(attribute, message_type, options.merge(:count => count))
           hash[option] = count
         end
