@@ -86,6 +86,7 @@
     var valid = true;
 
     form.trigger('form:validate:before').find('[data-validate]:input').each(function() {
+      $(this).data('changed', true);
       if (!$(this).isValid(validators)) { valid = false; }
     });
 
