@@ -337,7 +337,7 @@ var clientSideValidations = {
           inputErrorField.find('span#input_tag').replaceWith(element);
           inputErrorField.find('label.message').attr('for', element.attr('id'));
           labelErrorField.find('label.message').attr('for', element.attr('id'));
-          label.replaceWith(labelErrorField);
+          labelErrorField.insertAfter(label);
           labelErrorField.find('label#label_tag').replaceWith(label);
         }
         jQuery('label.message[for="' + element.attr('id') + '"]').text(message);
