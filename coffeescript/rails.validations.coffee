@@ -233,7 +233,7 @@ window.ClientSideValidations.validators =
 
         val = val.replace(new RegExp("\\#{ClientSideValidations.number_format.delimiter}",'g'),"").replace(new RegExp("\\#{ClientSideValidations.number_format.separator}",'g'),".")
 
-        if options.only_integer and !/^[+-]?\d+$/.test(val)
+        if options.only_integer and !(/^[+-]?\d+$/).test(val)
           return options.messages.only_integer
 
         CHECKS =
