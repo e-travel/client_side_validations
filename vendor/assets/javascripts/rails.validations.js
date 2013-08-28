@@ -135,8 +135,8 @@
   }
 
   window.ClientSideValidations.selectors = {
-    inputs: ':input:not(button):not([type="submit"])[name]:visible:enabled',
-    validate_inputs: ':input:enabled:visible[data-validate]',
+    inputs: ':input:not(button):not(:checkbox):not([type="submit"])[name]:enabled',
+    validate_inputs: ':input:not(:checkbox):enabled[data-validate]',
     forms: 'form[data-validate]'
   };
 
@@ -582,12 +582,11 @@
   window.ClientSideValidations.formBuilders = {
     'ActionView::Helpers::FormBuilder': {
       add: function(element, settings, message) {
-        var form, inputErrorField, label, labelErrorField;
-        form = $(element[0].form);
-        if (element.data('valid') !== false && (form.find("label.message[for='" + (element.attr('id')) + "']")[0] == null)) {
+        var inputErrorField, label, labelErrorField;
+        if (element.data('valid') !== false && ($("label.message[for='" + (element.attr('id')) + "']")[0] == null)) {
           inputErrorField = jQuery(settings.input_tag);
           labelErrorField = jQuery(settings.label_tag);
-          label = form.find("label[for='" + (element.attr('id')) + "']:not(.message)");
+          label = $("label[for='" + (element.attr('id')) + "']:not(.message)");
           if (element.attr('autofocus')) {
             element.attr('autofocus', false);
           }
@@ -598,14 +597,13 @@
           labelErrorField.insertAfter(label);
           labelErrorField.find('label#label_tag').replaceWith(label);
         }
-        return form.find("label.message[for='" + (element.attr('id')) + "']").text(message);
+        return $("label.message[for='" + (element.attr('id')) + "']").text(message);
       },
       remove: function(element, settings) {
-        var errorFieldClass, form, inputErrorField, label, labelErrorField;
-        form = $(element[0].form);
+        var errorFieldClass, inputErrorField, label, labelErrorField;
         errorFieldClass = jQuery(settings.input_tag).attr('class');
         inputErrorField = element.closest("." + (errorFieldClass.replace(" ", ".")));
-        label = form.find("label[for='" + (element.attr('id')) + "']:not(.message)");
+        label = $("label[for='" + (element.attr('id')) + "']:not(.message)");
         labelErrorField = label.closest("." + errorFieldClass);
         if (inputErrorField[0]) {
           inputErrorField.find("#" + (element.attr('id'))).detach();
