@@ -109,8 +109,8 @@ if window.ClientSideValidations.forms == undefined
   window.ClientSideValidations.forms = {}
 
 window.ClientSideValidations.selectors =
-  inputs: ':input:not(button):not([type="submit"])[name]:enabled'
-  validate_inputs: ':input:enabled[data-validate]'
+  inputs: ':input:not(button):not(:checkbox):not([type="submit"])[name]:enabled'
+  validate_inputs: ':input:not(:checkbox):enabled[data-validate]'
   forms:  'form[data-validate]'
 
 window.ClientSideValidations.reset = (form) ->
