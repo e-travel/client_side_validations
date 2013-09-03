@@ -72,26 +72,13 @@ module ClientSideValidations::ActiveModel
         if validator.options[:if] || validator.options[:unless]
           if validator.options[:if] && validator.options[:if] =~ /changed\?/
             result = true
-          else result = can_force_validator?(attr, validator, force)
-            if validator.options[:if]
-              result = result && run_conditional(validator.options[:if])
-            end
-            if validator.options[:unless]
-              result = result && !run_conditional(validator.options[:unless])
-            end
+          else
+            result = can_force_validator?(attr, validator, force)
           end
         end
       end
 
       result
-    end
-
-    def run_conditional(method_name_value_or_proc)
-      if method_name_value_or_proc.respond_to?(:call)
-        method_name_value_or_proc.call(self)
-      else
-        self.send(method_name_value_or_proc)
-      end
     end
 
     def validator_turned_off?(attr, validator, force)
