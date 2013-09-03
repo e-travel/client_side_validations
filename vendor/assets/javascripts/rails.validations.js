@@ -127,8 +127,8 @@
   }
 
   window.ClientSideValidations.selectors = {
-    inputs: ':input:not(button):not(:checkbox):not([type="submit"])[name]:enabled',
-    validate_inputs: ':input:not(:checkbox):enabled[data-validate]',
+    inputs: ':input:not(button):not(:checkbox):not([type="submit"])[name]:enabled:not([data-skip-validation="true"])',
+    validate_inputs: ':input:not(:checkbox):enabled[data-validate]:not([data-skip-validation="true"])',
     forms: 'form[data-validate]'
   };
 
