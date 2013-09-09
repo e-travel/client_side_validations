@@ -11,7 +11,7 @@ module ClientSideValidations
       end
 
       def call(env)
-        if matches = /\A\/validators\/(\w+)\z/.match(env['PATH_INFO'])
+        if matches = /\A\/validators\/(\w+)(\.(\w+))?\z/.match(env['PATH_INFO'])
           process_request(matches.captures.first, env)
         else
           @app.call(env)
