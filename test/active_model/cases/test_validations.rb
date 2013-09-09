@@ -235,16 +235,6 @@ class ActiveModel::ValidationsTest < ClientSideValidations::ActiveModelTestBase
     person = new_person do |p|
       p.validates :first_name, :presence => { :if => :can_validate? }, :length => { :is => 5, :if => :can_validate? }
       p.validates :last_name, :presence => { :unless => :cannot_validate? }, :length => { :is => 10, :unless => :cannot_validate? }
-
-      p.class_eval do
-        def can_validate?
-          true
-        end
-
-        def cannot_validate?
-          true
-        end
-      end
     end
 
     expected_hash = {
@@ -254,7 +244,7 @@ class ActiveModel::ValidationsTest < ClientSideValidations::ActiveModelTestBase
         }]
       }
     }
-    assert_equal expected_hash, person.client_side_validation_hash(:first_name => { :presence => true }, :last_name => { :presence => true })
+    assert_equal expected_hash, person.client_side_validation_hash(:first_name => { :presence => true })
   end
 
   def test_forcing_all_validators_off
