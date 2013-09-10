@@ -6,6 +6,8 @@ tags
 test/generators/tmp/*
 *.swp
 .*rc
+.ruby-version
+.ruby-gemset
 bundler_stubs/*
 binstubs/*
 bin/*
