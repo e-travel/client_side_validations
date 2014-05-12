@@ -586,8 +586,13 @@
           inputErrorField.find('span#input_tag').replaceWith(element);
           inputErrorField.find('label.message').attr('for', element.attr('id'));
           labelErrorField.find('label.message').attr('for', element.attr('id'));
-          labelErrorField.insertAfter(label);
-          labelErrorField.find('label#label_tag').replaceWith(label);
+          label.each(function () {
+            var label = $(this),
+                labelErrorFieldClone = labelErrorField.clone();
+
+            labelErrorFieldClone.insertAfter(label);
+            labelErrorFieldClone.find('label#label_tag').replaceWith(label);
+          });
         }
         return $("label.message[for='" + (element.attr('id')) + "']").text(message);
       },
@@ -596,12 +601,20 @@
         errorFieldClass = jQuery(settings.input_tag).attr('class');
         inputErrorField = element.closest("." + (errorFieldClass.replace(" ", ".")));
         label = $("label[for='" + (element.attr('id')) + "']:not(.message)");
-        labelErrorField = label.closest("." + errorFieldClass);
+
+        label.each(function () {
+          var label = $(this),
+              labelErrorField = label.closest("." + errorFieldClass);
+
+          if (labelErrorField.length > 0) {
+            label.detach();
+            labelErrorField.replaceWith(label);
+          }
+        });
+
         if (inputErrorField[0]) {
           inputErrorField.find("#" + (element.attr('id'))).detach();
           inputErrorField.replaceWith(element);
-          label.detach();
-          return labelErrorField.replaceWith(label);
         }
       }
     }
